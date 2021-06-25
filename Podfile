@@ -6,6 +6,7 @@ target 'ForFetch' do
   use_frameworks!
 
   # Pods for ForFetch
+pod 'Alamofire', '~> 5.2'
 
   target 'ForFetchTests' do
     inherit! :search_paths
