@@ -7,6 +7,8 @@ target 'ForFetch' do
 
   # Pods for ForFetch
 pod 'Alamofire', '~> 5.2'
+pod 'ObjectMapper', '~> 3.5'
+pod 'SDWebImage', '~> 5.0'
 
   target 'ForFetchTests' do
     inherit! :search_paths

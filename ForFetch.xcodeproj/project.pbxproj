@@ -20,6 +20,9 @@
 		C6B2A3FC2685248100ED8F05 /* ForFetchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B2A3FB2685248100ED8F05 /* ForFetchUITests.swift */; };
 		C6B2A40D2685935600ED8F05 /* SeatGeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B2A40B2685935600ED8F05 /* SeatGeekTableViewCell.swift */; };
 		C6B2A40E2685935600ED8F05 /* SeatGeekTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6B2A40C2685935600ED8F05 /* SeatGeekTableViewCell.xib */; };
+		C6B2A41026859E8100ED8F05 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B2A40F26859E8100ED8F05 /* Service.swift */; };
+		C6B2A4122686346F00ED8F05 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B2A4112686346F00ED8F05 /* Event.swift */; };
+		C6B2A414268A257A00ED8F05 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B2A413268A257A00ED8F05 /* DetailViewController.swift */; };
 		CECA668B59D6D621098E5967 /* Pods_ForFetch_ForFetchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE1D76696A54DE6E7526063A /* Pods_ForFetch_ForFetchUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,9 @@
 		C6B2A3FD2685248100ED8F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6B2A40B2685935600ED8F05 /* SeatGeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatGeekTableViewCell.swift; sourceTree = "<group>"; };
 		C6B2A40C2685935600ED8F05 /* SeatGeekTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatGeekTableViewCell.xib; sourceTree = "<group>"; };
+		C6B2A40F26859E8100ED8F05 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		C6B2A4112686346F00ED8F05 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		C6B2A413268A257A00ED8F05 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EE1D76696A54DE6E7526063A /* Pods_ForFetch_ForFetchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ForFetch_ForFetchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -148,6 +154,7 @@
 				C6B2A3D62685247E00ED8F05 /* AppDelegate.swift */,
 				C6B2A3D82685247E00ED8F05 /* SceneDelegate.swift */,
 				C6B2A3DA2685247E00ED8F05 /* ViewController.swift */,
+				C6B2A413268A257A00ED8F05 /* DetailViewController.swift */,
 				C6B2A40B2685935600ED8F05 /* SeatGeekTableViewCell.swift */,
 				C6B2A40C2685935600ED8F05 /* SeatGeekTableViewCell.xib */,
 				C6B2A3DC2685247E00ED8F05 /* Main.storyboard */,
@@ -155,6 +162,8 @@
 				C6B2A3E42685248000ED8F05 /* LaunchScreen.storyboard */,
 				C6B2A3E72685248000ED8F05 /* Info.plist */,
 				C6B2A3DF2685247E00ED8F05 /* ForFetch.xcdatamodeld */,
+				C6B2A40F26859E8100ED8F05 /* Service.swift */,
+				C6B2A4112686346F00ED8F05 /* Event.swift */,
 			);
 			path = ForFetch;
 			sourceTree = "<group>";
@@ -421,6 +430,9 @@
 				C6B2A40D2685935600ED8F05 /* SeatGeekTableViewCell.swift in Sources */,
 				C6B2A3E12685247E00ED8F05 /* ForFetch.xcdatamodeld in Sources */,
 				C6B2A3D92685247E00ED8F05 /* SceneDelegate.swift in Sources */,
+				C6B2A4122686346F00ED8F05 /* Event.swift in Sources */,
+				C6B2A41026859E8100ED8F05 /* Service.swift in Sources */,
+				C6B2A414268A257A00ED8F05 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

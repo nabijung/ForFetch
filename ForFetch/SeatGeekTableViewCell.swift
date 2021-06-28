@@ -15,11 +15,13 @@ class SeatGeekTableViewCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var heartIcon: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         venuImage.layer.cornerRadius = venuImage.frame.height/4
+        venuImage.contentMode = .scaleAspectFill
         
         titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         locationLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 12)

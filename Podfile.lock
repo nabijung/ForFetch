@@ -1,16 +1,26 @@
 PODS:
   - Alamofire (5.4.3)
+  - ObjectMapper (3.5.3)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
+  - ObjectMapper (~> 3.5)
+  - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - ObjectMapper
+    - SDWebImage
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  ObjectMapper: 97111c97e054a6ee25917662106689f0b4127b37
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: 782f77c0ee60a57ca3ec247390fe06a1f3cd3234
+PODFILE CHECKSUM: d3b30642ba048fcf19c60465b68a9eb80dc9a41f
 
 COCOAPODS: 1.10.1
