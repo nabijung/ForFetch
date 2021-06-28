@@ -25,6 +25,8 @@ class DetailViewController: UIViewController {
     
     var favorites: [NSManagedObject] = []
     
+    weak var delegate: refreshDelegate?
+    
     let heartButton: UIButton = {
        let button = UIButton()
         button.addTarget(self, action: #selector(heartButtonPressed(_:)), for: .touchUpInside)
@@ -93,45 +95,42 @@ class DetailViewController: UIViewController {
             if Int(entity.value(forKey: "event_id") as! String) == event.id,
                entity.value(forKey: "event_dateTime") as? String == event.datetime {
                 context.delete(entity)
-                do {
-                  try context.save()
-                  isFavorite = !isFavorite
-                  //call delegate to refresh favorites
-                } catch let error as NSError {
-                  print("Could not save. \(error), \(error.userInfo)")
-                }
-                //call delegate
+                saveContext(context: context)
             }
         }
     }
     
     func heart(eventid: String, eventdate: String) {
-
-      guard let appDelegate =
-        UIApplication.shared.delegate as? AppDelegate else {
-        return
-      }
         
-      let context = appDelegate.persistentContainer.viewContext
-      
-      guard let entity =
-        NSEntityDescription.entity(forEntityName: "Favorites",
-                                   in: context) else {
-        return
-      }
-      
+        guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        guard let entity =
+                NSEntityDescription.entity(forEntityName: "Favorites",
+                                           in: context) else {
+            return
+        }
+        
         let savedEventObject = NSManagedObject(entity: entity,
-                                   insertInto: context)
+                                               insertInto: context)
         
-      savedEventObject.setValue(eventid, forKeyPath: "event_id")
-        savedEventObject.setValue(eventdate, forKey: "event_dateTime")
-      do {
-        try context.save()
-        isFavorite = !isFavorite
-        //call delegate to refresh favorites
-      } catch let error as NSError {
-        print("Could not save. \(error), \(error.userInfo)")
-      }
+        savedEventObject.setValue(eventid, forKeyPath: "event_id")
+        saveContext(context: context)
+        
+    }
+    
+    func saveContext(context: NSManagedObjectContext){
+        do {
+            try context.save()
+            isFavorite = !isFavorite
+            delegate?.refresh()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
     func setUpUI() {
@@ -194,4 +193,7 @@ class DetailViewController: UIViewController {
     }
 }
 
+protocol refreshDelegate: AnyObject {
+    func refresh()
+}
 

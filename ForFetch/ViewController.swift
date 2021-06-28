@@ -28,13 +28,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var events: [Event]?
     
     var favorites: [NSManagedObject] = []
+    var favoriteIDs: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         callSeatGeekAPI(query: "")
     }
     
@@ -58,10 +56,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func callSeatGeekAPI(query: String){
+        events = []
         Service.sharedInstance.callAPI(query: query, completion: { hasError, events in
             if !hasError {
                 self.events = events
                 self.getFavorites()
+                self.tableview.reloadData()
             } else {
                 //handle error
             }
@@ -94,27 +94,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     tableview.reloadData()
                 }
             } else {
-                for event in events!{
-                    for entity in favorites {
-                        if Int(entity.value(forKey: "event_id") as! String) == event.id,
-                           entity.value(forKey: "event_dateTime") as? String == event.datetime {
-                            event.isFavorite = true
-                            print("\(event.title!) is a fav")
-                            tableview.reloadData()
-                        } else {
-                            event.isFavorite = false
-                            print("\(event.title!) is a NOT fav")
-                            tableview.reloadData()
-                        }
+                var idArray: [Int] = []
+                for entity in favorites {
+                    guard let id = Int(entity.value(forKey: "event_id") as! String) else{
+                        return
                     }
+                    idArray.append(id)
+                    favoriteIDs = idArray
                 }
             }
           } catch let error as NSError {
             print(error.localizedDescription)
           }
-        
-        
     }
+    
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
@@ -136,7 +129,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: "SeatGeekCell") as! SeatGeekTableViewCell
-        guard events != nil, let event = events?[indexPath.row] else {
+        guard events != nil,
+              let event = events?[indexPath.row],
+              let eventid = event.id else {
             
             return cell
         }
@@ -150,9 +145,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.timeLabel.text = time
         }
         
-        if event.isFavorite {
+        if favoriteIDs.contains(eventid) {
             cell.heartIcon.isHidden = false
+            event.isFavorite = true
         } else {
+            event.isFavorite = false
             cell.heartIcon.isHidden = true
         }
         
@@ -169,6 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let vc = segue.destination as? DetailViewController
             vc?.event = sender as? Event
             vc?.favorites = favorites
+            vc?.delegate = self
         }
     }
 }
@@ -202,6 +200,16 @@ extension String {
             return convertDateFormatter.string(from: localTime)
         } else {
             return "Time n/A"        }
+    }
+}
+
+extension ViewController: refreshDelegate {
+    func refresh() {
+        if searchBar.text == nil {
+            callSeatGeekAPI(query: "")
+        } else {
+            callSeatGeekAPI(query: searchBar.text!)
+        }
     }
 }
 
