@@ -23,9 +23,9 @@ Tap the heart to save the event to your favorites
 
 ##Installation
 Clone this repo
-Open shell window and navigate to project folder
-Run pod install
-Open ForFetch.xcworkspace and run the project on selected device or simulator
+-> Open shell window and navigate to project folder
+-> Run pod install
+-> Open ForFetch.xcworkspace and run the project on selected device or simulator
 
 ##Project Status
 Complete
