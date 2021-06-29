@@ -66,7 +66,6 @@ class DetailViewController: UIViewController {
     }
     
     @objc func heartButtonPressed(_ button: UIButton){
-        print("I'm here!")
         if isFavorite {
             guard let event = event else {
                 return
@@ -131,7 +130,7 @@ class DetailViewController: UIViewController {
             try context.save()
             delegate?.refresh()
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            presentAlertController(message: error.localizedDescription, view: self)
         }
     }
     
@@ -191,7 +190,6 @@ class DetailViewController: UIViewController {
             heartButton.isHidden = true
             return
         }
-        print("The heart button is not hidden")
         isFavorite = event!.isFavorite
     }
 }

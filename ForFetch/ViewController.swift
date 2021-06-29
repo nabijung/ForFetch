@@ -61,7 +61,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.events = events
                 self.getFavorites()
             } else {
-                //handle error
+                self.presentAlertController(message: "Could not call SeatGeek, please check your network connection and try again.", view: self)
             }
         })
         
@@ -103,7 +103,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
           } catch let error as NSError {
-            print(error.localizedDescription)
+            presentAlertController(message: error.localizedDescription, view: self)
           }
     }
     
@@ -217,7 +217,7 @@ extension ViewController: refreshDelegate {
     }
 }
 
-extension ViewController {
+extension UIViewController {
     func presentAlertController(message: String, view: UIViewController){
         let alertcontroller = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
