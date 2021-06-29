@@ -28,12 +28,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var events: [Event]?
     
     var favorites: [NSManagedObject] = []
-    var favoriteIDs: [Int] = []
+    var favoriteIDs: [Int] = [] 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        callSeatGeekAPI(query: "")
+        callSeatGeekAPI(query: "A")
     }
     
     func setUpUI(){
@@ -56,12 +56,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func callSeatGeekAPI(query: String){
-        events = []
         Service.sharedInstance.callAPI(query: query, completion: { hasError, events in
             if !hasError {
                 self.events = events
                 self.getFavorites()
-                self.tableview.reloadData()
             } else {
                 //handle error
             }
@@ -96,11 +94,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             } else {
                 var idArray: [Int] = []
                 for entity in favorites {
-                    guard let id = Int(entity.value(forKey: "event_id") as! String) else{
+                    guard let id = Int(entity.value(forKeyPath: "event_id") as! String) else{
                         return
                     }
                     idArray.append(id)
                     favoriteIDs = idArray
+                    tableview.reloadData()
                 }
             }
           } catch let error as NSError {
@@ -115,10 +114,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //put code here
-        callSeatGeekAPI(query: searchText)
+        if searchText == "" {
+            callSeatGeekAPI(query: "A")
+        } else {
+            callSeatGeekAPI(query: searchText)
+        }
+        
     }
-    
-    //add that search bar x button pressed
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard events != nil else {
@@ -130,6 +132,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: "SeatGeekCell") as! SeatGeekTableViewCell
         guard events != nil,
+              events?.count != 0,
               let event = events?[indexPath.row],
               let eventid = event.id else {
             
@@ -159,6 +162,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToDetailView", sender: events?[indexPath.row])
         tableview.deselectRow(at: indexPath, animated: true)
+        self.searchBar.resignFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -205,12 +209,22 @@ extension String {
 
 extension ViewController: refreshDelegate {
     func refresh() {
-        if searchBar.text == nil {
-            callSeatGeekAPI(query: "")
-        } else {
+        if searchBar.text != nil {
             callSeatGeekAPI(query: searchBar.text!)
+        } else {
+            callSeatGeekAPI(query: "")
         }
     }
+}
+
+extension ViewController {
+    func presentAlertController(message: String, view: UIViewController){
+        let alertcontroller = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertcontroller.addAction(action)
+        view.present(alertcontroller, animated: true, completion: nil)
+    }
+    
 }
 
 

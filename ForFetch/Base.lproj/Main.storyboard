@@ -19,7 +19,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <segue destination="h8T-pM-eZ2" kind="show" identifier="goToDetailView" id="2jn-wK-Ndu"/>
+                        <segue destination="h8T-pM-eZ2" kind="showDetail" identifier="goToDetailView" id="2jn-wK-Ndu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

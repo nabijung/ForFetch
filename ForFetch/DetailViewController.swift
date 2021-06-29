@@ -50,7 +50,7 @@ class DetailViewController: UIViewController {
     
     let timeAndDateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
         return label
     }()
     
@@ -66,41 +66,43 @@ class DetailViewController: UIViewController {
     }
     
     @objc func heartButtonPressed(_ button: UIButton){
-    
+        print("I'm here!")
         if isFavorite {
             guard let event = event else {
                 return
             }
             unHeart(event: event)
         } else {
-            guard let id = event?.id,
-                  let date = event?.datetime else {
+            guard let id = event?.id else {
                 return
             }
             let string_id = String(id)
-            heart(eventid: string_id, eventdate: date)
+            heart(eventid: string_id)
         }
         
     }
     
     func unHeart(event: Event) {
+        
         guard let appDelegate =
           UIApplication.shared.delegate as? AppDelegate else {
           return
         }
           
         let context = appDelegate.persistentContainer.viewContext
-         
+    
         for entity in favorites {
-            if Int(entity.value(forKey: "event_id") as! String) == event.id,
-               entity.value(forKey: "event_dateTime") as? String == event.datetime {
+            if Int(entity.value(forKeyPath: "event_id") as! String) == event.id {
                 context.delete(entity)
-                saveContext(context: context)
             }
         }
+        saveContext(context: context)
+        isFavorite = !isFavorite
+        
+        
     }
     
-    func heart(eventid: String, eventdate: String) {
+    func heart(eventid: String) {
         
         guard let appDelegate =
                 UIApplication.shared.delegate as? AppDelegate else {
@@ -121,12 +123,12 @@ class DetailViewController: UIViewController {
         savedEventObject.setValue(eventid, forKeyPath: "event_id")
         saveContext(context: context)
         
+        isFavorite = !isFavorite
     }
     
     func saveContext(context: NSManagedObjectContext){
         do {
             try context.save()
-            isFavorite = !isFavorite
             delegate?.refresh()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
@@ -189,6 +191,7 @@ class DetailViewController: UIViewController {
             heartButton.isHidden = true
             return
         }
+        print("The heart button is not hidden")
         isFavorite = event!.isFavorite
     }
 }

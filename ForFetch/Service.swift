@@ -23,8 +23,10 @@ class Service: NSObject {
     
     func callAPI(query: String, completion: @escaping(Bool, [Event])->Void){
         
+        let queryString = query.replacingOccurrences(of: " ", with: "+")
+        
         if query != "" {
-            queryParameters["q"] = query
+            queryParameters["q"] = queryString
         }
         
         var events = [Event]()
